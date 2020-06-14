@@ -1,0 +1,49 @@
+- name: produce_response
+  schema:
+  - field: response_header
+    type: response_header
+  - field: responses
+    type:
+      struct:
+      - field: topic
+        type: STRING
+        description: Name of topic
+      - field: partition_responses
+        type:
+          struct:
+          - field: partition
+            type: INT32
+            description: Topic partition id
+          - field: error_code
+            type: INT16
+            description: Response error code
+          - field: base_offset
+            type: INT64
+          - field: log_append_time
+            type: INT64
+            description: |
+              The timestamp returned by broker after appending the messages.
+              If CreateTime is used for the topic, the timestamp will be -1.
+              If LogAppendTime is used for the topic, the timestamp will be the broker local time when the messages are appended.
+          - field: log_start_offset
+            type: INT64
+            description: The start offset of the log at the time this produce response was created
+          - field: record_errors
+            type:
+              array:
+                struct:
+                - field: batch_index
+                  type: INT32
+                  description: The batch index of the record that caused the batch to be dropped
+                - field: batch_index_error_message
+                  type: NULLABLE_STRING
+                  description: The error message of the record that caused the batch to be dropped
+            description: The batch indices of records that caused the batch to be dropped
+          - field: error_message
+            type: NULLABLE_STRING
+            description: The global error message summarizing the common root cause of the records that caused the batch to be dropped
+          - field: throttle_time_ms
+            type: INT32
+            description: |
+              Duration in milliseconds for which the request was throttled due to quota violation
+              (Zero if the request did not violate any quota)

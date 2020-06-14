@@ -1,5 +1,7 @@
 package com.mayreh.toyka.server.network
 
-class Response(val request: Request) {
+import com.mayreh.toyka.network.RequestResponseSend
 
+class Response(val request: Request) {
+  def toSend: RequestResponseSend = ???
 }

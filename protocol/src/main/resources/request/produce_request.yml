@@ -1,0 +1,29 @@
+- name: produce_request
+  schema:
+  - field: request_header
+    type: request_header
+  - field: transactional_id
+    type: NULLABLE_STRING
+    description: The transactional id or null if the producer is not transactional
+  - field: acks
+    type: INT16
+    description: |
+      The number of acknowledgments the producer requires the leader to
+      have received before considering a request complete.
+      Allowed values: 0 for no acknowledgments, 1 for only the leader and -1 for the full ISR
+  - field: timeout
+    type: INT32
+    description: The time to await a response in ms
+  - field: topic_data
+    type:
+      struct:
+      - field: topic
+        type: STRING
+      - field: data
+        type:
+          array:
+            struct:
+            - field: partition
+              type: INT32
+            - field: record_set
+              type: NULLABLE_BYTES

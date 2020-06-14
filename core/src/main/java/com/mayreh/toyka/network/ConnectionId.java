@@ -9,6 +9,7 @@ import java.util.Objects;
  */
 public class ConnectionId implements Serializable {
     private static final long serialVersionUID = -2008785333620833489L;
+
     private final String remoteHost;
     private final int remotePort;
     private final String localHost;
@@ -16,10 +17,22 @@ public class ConnectionId implements Serializable {
     private final int sequence;
 
     public ConnectionId(Socket socket, int sequence) {
-        remoteHost = socket.getInetAddress().getHostAddress();
-        remotePort = socket.getPort();
-        localHost = socket.getLocalAddress().getHostAddress();
-        localPort = socket.getLocalPort();
+        this(socket.getInetAddress().getHostAddress(),
+                socket.getPort(),
+                socket.getLocalAddress().getHostAddress(),
+                socket.getLocalPort(),
+                sequence);
+    }
+
+    public ConnectionId(String remoteHost,
+                        int remotePort,
+                        String localHost,
+                        int localPort,
+                        int sequence) {
+        this.remoteHost = remoteHost;
+        this.remotePort = remotePort;
+        this.localHost = localHost;
+        this.localPort = localPort;
 
         this.sequence = sequence;
     }
@@ -48,5 +61,17 @@ public class ConnectionId implements Serializable {
                 localHost,
                 localPort,
                 sequence);
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append(remoteHost).append(':')
+                .append(remotePort)
+                .append('-')
+                .append(localHost).append(':')
+                .append(localPort)
+                .append('-')
+                .append(sequence).toString();
     }
 }

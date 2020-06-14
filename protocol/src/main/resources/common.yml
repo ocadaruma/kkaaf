@@ -1,0 +1,20 @@
+- name: request_header
+  schema:
+  - field: request_api_key
+    type: INT16
+    description: The API key of this request
+  - field: request_api_version
+    type: INT16
+    description: The API version of this request
+  - field: correlation_id
+    type: INT32
+    description: The correlation ID of this request
+  - field: client_id
+    type: NULLABLE_STRING
+    description: The client ID string
+
+- name: response_header
+  schema:
+  - field: correlation_id
+    type: INT32
+    description: The correlation ID of this response
